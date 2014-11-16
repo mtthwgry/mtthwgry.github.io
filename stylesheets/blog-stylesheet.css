@@ -6,6 +6,21 @@ body {
   margin: 0 auto;
   font-family: sans-serif;
 }
+code.inline {
+  display: inline;
+  background: whitesmoke;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0 5px;
+}
+code.block {
+  width: 650px;
+  margin: 15px auto;
+  display: block;
+  background-color: whitesmoke;
+  font-size: 12px;
+  white-space: pre;
+}
 #header, #footer {
   height: 75px;
   text-align: center;
@@ -41,4 +56,9 @@ body {
   clear: both;
   margin-top: 40px;
   font-size: 16px;
+  line-height: 20px;
+}
+p span {
+  font-weight: bold;
+  font-size: 12px;
 }
