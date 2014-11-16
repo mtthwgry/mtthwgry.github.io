@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">Collecting Things in Ruby: Arrays and Hashbrowns, I mean Hashes</li>
+          <li class="author">by Matthew Gray on November 15, 2014</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <p>
+          Ruby offers many ways to store a collection of objects, through the use of two data structures called arrays and hashes. I will attempt to do my best at explaining the best practices of arrays and hashes in Ruby, why you would want to use one over the other. But, as always, your mileage may vary, there are a millions ways to skin a cat (still not quite sure why that is a saying, I mean who has actually tried to skin a cat...and more than once!?). The over simplified difference between arrays and hashes in Ruby is how you can reference the objects contained within them. Allow me to quote the theme song from The Bugs Bunny Show, if I may, <em>"On with the show, this is it!"</em>
+        </p>
+        <h2>Arrays: a list of objects</h2>
+        <p>
+          First up are Ruby arrays! You can think of an array as a numbered list of objects, which can be anything thing from integers to strings, and even other arrays. Just like a numbered list, each object in an array has a specific value which represents the place where the object lives within that array. The objects stored in an array are typically related in some way, shape, or form. For example, if you had an array of all the record albums you own, you wouldn't store a book within that list. However, if you had an array of your favorite things, you might store your favorite: book, meal, record album, or childhood television show.
+        <h3>Creating an Array</h3>
+        <p>
+          There are multiple ways to create an array in Ruby. The simplest way to create an array is: <code class="inline">favorite_colors = ["red", "green", "blue"]</code>. However, there is an even easie way to create an array of strings, or words, that doesn't require commas or quotes: <code class="inline">my_friends = %w{Cassie Maxwell Thomas Minnie}</code> which will return the value <code class="inline">["Cassie", "Maxwell", "Thomas", "Minnie"]</code>. Ruby is smart enough to wrap each word in quotes, which converts them to strings. <span class="note">Note: The <code class="inline">%w{}</code> method of creating an array will always return an array of strings.</span>
+        </p>
+        <p>There is a more verbose way to create an array in Ruby. It uses the <code class="inline">Array</code> class's <code class="inline">new</code> method. There are multiple options for creating an array using this method: you can specify the size, or dimension, of the array; you can specify a default value for each entry in the array; and you can specify nothing to create a new empty array.
+          <code class="block">
+            # Define an array using the new() method
+            grocery_list = Array.new
+            # => []
+
+            # Define an array with a specific dimension
+            grocery_list = Array.new(5)
+            # => [nil, nil, nil, nil, nil]
+
+            # Define an array with a specific dimension and default value
+            grocery_list = Array.new(5, "eggs")
+            # => ["eggs", "eggs", "eggs", "eggs", "eggs"]
+          </code>
+        </p>
+        <h3>Updating and Accessing Stored Values in an Array</h3>
+        <p>
+          You might be thinking, "It's great that I have a new array (that is either empty, or has a place holder of nil, or has all the same value), but how do I change the data that is being stored in the array. How can I access it?" Well, remember that an array is just like a numbered list of related objects. Each object has it's specific number that identifies it, and thus allows you to access it. The syntax for this looks like: <code class="inline">grocery_list[index]</code>, where <code class="inline">index</code> is the place in the array where the object you are trying to access lives. If you use the assignment operator, <code class="inline">=</code>, in conjunction with the previous syntax: <code class="inline">grocery_list[index] = "some new value"</code> you will change the value that is assocaiated with that particular <code class="inline">index</code>. This is a great time to explain how arrays are indexed. Array indices start at 0 and end at one less than the dimension of the array (the number of objects in the array). Therefore, <code class="inline">grocery_list[0]</code> would return the first value in the array. You can also access values from the end of the array, by using a negative <code class="inline">index</code>, thus <code class="inline">grocery_list[-1]</code> would return the last item in the array.
+          <code class="block">
+            # Set a new value at position 0
+            grocery_list[0]
+            # => "eggs"
+            grocery_list[0] = "milk"
+            grocery_list[0]
+            # => "milk"
+            grocery_list
+            # => ["milk", "eggs", "eggs", "eggs", "eggs"]
+          </code>
+        </p>
+        <h3>Popular Array Methods</h3>
+        <p>
+          Ruby offers a lot of methods for the Array class. Here are a few that are important:
+          <code class="block">
+            # Add an object to the end of the array
+            grocery_list.push("tortillas")
+            # => ["milk", "eggs", "eggs", "eggs", "eggs", "tortillas"]
+
+            # Alternative to .push(value)
+            grocery_list << "cereal"
+            # => ["milk", "eggs", "eggs", "eggs", "eggs", "tortillas", "cereal"]
+
+            # Remove and return the last object
+            grocery_list.pop
+            # => "cereal"
+            grocery_list
+            # => ["milk", "eggs", "eggs", "eggs", "eggs", "tortillas"]
+
+            # Returns a sub array from starting at the given index
+            whole_foods_list = grocery_list.drop(4)
+            # => ["eggs", "tortillas"]
+
+            # Returns the dimension of the array
+            whole_foods_list.length
+            # => 2
+          </code>
+          There are many more methods, far too many to cover here in this post, but if you are interested you can check them out on the <a href="http://www.ruby-doc.org/core-2.1.5/Array.html">Ruby Doc Array</a> page.
+        </p>
+        <h2>Hashes: a dictionary of values</h2>
+        <p>
+          Next on our journey down the Ruby road, is the Ruby Hash object. Hashes in Ruby are similar to arrays, but instead of referencing their values by an index, they reference their objects by a key. A key can be any integer, string, or symbol. A Ruby symbol may be something new to you, but don't worry about them too much. They are basically unique objects in Ruby, which are commonly used as keys in a hash. For more information <a href="http://www.troubleshooters.com/codecorn/ruby/symbols.htm">read this article</a> on symbols. And now, back to Ruby Hashes...
+        <h3>Creating a Hash</h3>
+        <p>
+          A hash can be created in multiple ways, just like an array. The shorthand for defining a hash is: <code class="inline">my_hash = {}</code>, which will create a new empty hash that looks like <code class="inline">{}</code>. Now if that doesn't get you all hot and bothered, maybe this will: Let's say we want to store all of the grades we have received for the last quarter of our senior year in high school! We need to know specificly how well we did in each class, but how can we reference a particular value? With those Ruby <code class="inline">:symbols</code> you just read about. We will pass these key-value pairs to Hash's new method.
+          <code class="block">
+            # Define a hash
+            grades = Hash.new(:english => "A", :math => "B", social_studies: "D")
+          </code>
+          Hey Boss, that looks great and all, but I think you made a typo on the last key-value pair. Wrong! That is an alternative way to define a key-value pair in Ruby 1.9+. It's a little easier to type and doesn't require the dastardly hash rocket <code class="inline">=></code> operator. That thing is just ugly. Also, I was never great at Social Studies...Hashes! You can also assign default values to a hash. But be careful, better yet mindful, of the fact that when you specify a default value for a Ruby hash, it will give that default for keys that aren't stored in your hash. See the below code:
+          <code class="block">
+            # Define a hash with default values
+            grades = Hash.new("F")
+            # => {}
+
+            # Initialize :english to "A"
+            grades[:english] = "A"
+            # => "A"
+
+            # Retrieve :social_studies
+            grades[:social_studies]
+            # => "F"
+          </code>
+          Whoops! We got a "D" in Social Studies, and we're damn proud of that...well, not really, but we at least want credit for it. This is when you must be mindful of hash default values.
+        </p>
+        <h3>Hash Methods</h3>
+        <p>
+          For as many methods that Ruby provides for arrays, it provides 10 fold the amount of methods for hashes. Okay, maybe not 10 fold, but there are many more, and some are more complex. We shall go through some of the more common methods for Ruby hashes in this section.
+          <code class="block">
+            # Retrieve a value in a hash
+            grades[:english]
+            # => "A"
+
+            # Update a key-value pair in a hash
+            grades[:social_studies] = "D"
+            # => "D"
+
+            # Return an array of all the keys
+            grades.keys
+            # => [:english, :social_studies]
+
+            # Return an array of all the values
+            grades.values
+            # => ["A", "D"]
+
+            # Change the default value
+            grades.default = "C"
+            # => "C"
+
+            # Retrieve an unkown key (returns default value)
+            grades[:econ]
+            # => "C"
+
+            # Delete a key
+            grades.delete(:english)
+            # => "A"
+
+            # Show the entire hash
+            grades
+            # => {:social_studies=>"D"}
+          </code>
+        </p>
+        <h2>Conclusion</h2>
+        <p>
+          In conclusion, I may have left you more confused than you started. How can you remedy this? In the words of Alan Iverson, "Practice! We're talking about practice!" Unlike A.I. however, I believe in practice. There is no better learning than making mistakes in <code class="inline">irb</code>. The final take away should be this: arrays are indexed by a number (starting at 0); while hashes are indexed by a key. Arrays should be strictly related object, while a hash can have looser relationships between it's keys. And finally, always remember: when in doubt, Google it out!
+        </p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>
