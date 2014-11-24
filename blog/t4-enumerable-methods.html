@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">Map in Ruby: Following Directions</li>
+          <li class="author">by Matthew Gray on November 23, 2014</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <p>
+          Okay, so you're new to the Ruby programming language. You have visited StackOverflow and a bunch of solutions to various problems that employ this special method called <code class="inline">map</code> followed by an intimidating piece of code surrounded by the evil braces of curl, <code class="inline">{}</code>. What the $#*! is going on between those things?!
+        </p>
+        <p>
+          Have no fear, for I am here, to explain the proper way to use map, help is near (I don't usually speak in rhyme).
+        </p>
+        <h3>So what does this mappy thingy do?</h3>
+        <p>
+          The Ruby Enumerable <code class="inline">map</code> method allows you to alter each individual item in your enumerable object. For the purpose of this post, we will assume that the enumerable object is always an array. The array can be an array of anything! In this particular case however, we are going to use an array of all the dogs that we walk on a weekly basis.
+          <code class="block">
+            dogs_i_walk = ["charlie", "bernard", "willie", "meatball", "jimbo"]
+          </code>
+          Well, thats great! But, we didn't capitalize the names of the dogs. How very unprofessional of us...There are 2 ways we could correct this problem: We could use an each block and iterate through each dog name capitalizing the name, and then set that value to the specific array index, blah, blah, blah; or we could just use <code class="inline">map</code>. We can accomplish the same thing if we use the <code class="inline">map</code> method and pass it a block using the <code class="inline">capitalize</code> method on each dog name. It sounds complicated, but it's not, just take a look below:
+          <code class="block">
+            dogs_i_walk.map{ |dog| dog.capitalize }
+            => ["Charlie", "Bernard", "Willie", "Meatball", "Jimbo"]
+
+            dogs_i_walk[0]
+            => "charlie"
+          </code>
+        </p>
+        <h3>HOLD THE PHONE! CHARLIE WAS SUPPOSED TO BE CAPITALIZED!</h3>
+        <p>
+          You are absolutely correct. Charlie was supposed to be capitalized, but it wasn't. You're probably wondering what happened here, please let me explain. The <code class="inline">map</code> method returns a new instance of an array, with the modified values. Consider the following block of code:
+          <code class="block">
+            dogs_i_walk.object_id
+            => 70211537844560
+
+            dogs_i_walk.map{ |dog| dog.capitalize }.object_id
+            => 70211542138280
+          </code>
+          Do you see where the <code class="inline">object_id</code> attributes vary from one array to the other? This is proof that the <code class="inline">map</code> method returns a new instance of an array. You are probably wondering how you can persist those changes to the original array, <code class="inline">dogs_i_walk</code>. Enter the new and improved, if not destructive, <code class="inline">map!</code>. The <code class="inline">!</code> character following the method name, designates a destructive method, one which saves any changes back to the original object. Follow along with the code below:
+          <code class="block">
+            dogs_i_walk.object_id
+            => 70211537844560
+
+            dogs_i_walk.map!{ |dog| dog.capitalize }.object_id
+            => 70211537844560
+
+            dogs_i_walk[0]
+            => "Charlie"
+          </code>
+          You can now see that the changes have been saved back in the original array, and the names will be capitalized until changed otherwise.
+        </p>
+        <h3>What about hashes? Do you not have love for them?</h3>
+        <p>
+          The <code class="inline">map</code> method works similarly on hashes. Let's say we have a hash, or catalog, of the pricing of all different variety of coffees we sell. Yes, we are now in the coffee business...
+          <code class="block">
+            coffee_prices = {
+              ethiopian: 14.32,
+              kenyan: 15.24,
+              guatemalan: 16.29,
+              colombian: 13.45
+            }
+            => {:ethiopian=>14.32, :kenyan=>15.24, :guatemalan=>16.29, :colombian=>13.45}
+          </code>
+          Pretty straight forward so far. With the recent droughts around the world we just received a price increase from our supplier, 22.5% across the board. With your knowledge of the use of map, how could we go about this? Let's see:
+          <code class="block">
+            coffee_prices.map{ |key, value| [key, (value *= 1.225).round(2)] }
+            => [[:ethiopian, 17.54], [:kenyan, 18.67], [:guatemalan, 19.96], [:colombian, 16.48]]
+          </code>
+          What the...? That may look a little unexpected, but not really because earlier you learned that the <code class="inline">map</code> function returns a new instance of an array with the modified values. The great news here, is that the array that we returned is formatted just right to easily create a new hash. See the snippet below:
+          <code class="block">
+            new_coffee_prices = Hash[coffee_pricing.map{ |key, value| [key, (value *= 1.225).round(2)] }]
+            => {:ethiopian=>17.54, :kenyan=>18.67, :guatemalan=>19.96, :colombian=>16.48}
+          </code>
+          Okay, so it's not the cleanest solution for updating a catalog of coffee prices, but it is an example of how to use the map method on a hash.
+        </p>
+        <h3>In closing</h3>
+        <p>
+          It never hurts to just play around in the irb console, which is basically a sandbox. My advice is trial and error: work on something, try to break it and then figure out why it broke. Happy mapping!
+        </p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>

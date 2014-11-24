@@ -14,12 +14,14 @@ code.inline {
   padding: 0 5px;
 }
 code.block {
-  width: 650px;
+  width: 700px;
   margin: 15px auto;
+  padding: 0 30px 25px 30px;
+  overflow: scroll;
   display: block;
   background-color: whitesmoke;
   font-size: 12px;
-  white-space: pre;
+  white-space: pre-line;
 }
 #header, #footer {
   height: 75px;
