@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">Add Some Class to Your Life with Ruby</li>
+          <li class="author">by Matthew Gray on November 30, 2015</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <h2>If you liked it you should have put a Ruby on it...</h2>
+        <p>
+          Who doesn't like a good Beyoncé joke? Honestly, I couldn't think of a better way to start off this post about class, without a reference to the classiest woman I don't know.
+        </p>
+        <h3>Dude, just start already. That song was like so 3 years ago, and so was that joke.</h3>
+        <p>
+          Well, I always like to start at the beginning. I will assume that you, the reader, has knowledge of Ruby as a programming language (limited to the basic data types: array, hash, string, integer, float, etc...). If you don't know what I'm talking about please go do some research on all of those things, then read all previous blog posts on this blog. I mean it. Do not read on.<br />
+          But, back to the lecture at hand...there is some really great news, some pretty mediocre news, and some kinda bad news that awaits you.
+        </p>
+        <h3>The Kinda Bad</h3>
+        <p>
+          Why start off with the bad news? Well, aside from me being a pessimist, I think there is a valuable piece of news to learn right away. That piece of news is:
+          <h1>CLASSES ARE INTIMIDATING AS #&%!</h1>
+          But don't worry. The good news is next!
+        <h3>The Really Good</h3>
+        <p>
+          You might want to take a seat because I am about to blow your mind! If you are familiar with the data types I listed above then you are already familiar with classes in Ruby! Each of those object is a class. An array is a class. A string is a class. A hash is a class. What classes allow you to do is define a blueprint, an outline if you will, of attributes and methods that are specific to that class, thus allowing the creation of a group of objects that are the same type. Without further ado, sit back, relax, 'cause it's time to get classy!
+        </p>
+        <h3>The Pretty Mediocre</h3>
+        <p>
+          And by pretty mediocre I mean the meat and potatoes of what you need to know. We will explore how a Ruby class can help us implement a Car class. An object of type car will have attributes of size, color, mileage, and year. We can represent this in the form of a hash. See below:
+          <code class="block">
+            pinto = {
+              size: "compact",
+              color: "brown",
+              mileage: 250000,
+              year: 1978
+            }
+            => {:size=>"compact", :color=>"brown", :mileage=>250000, :year=>1978}
+          </code>
+          Cool! Let's now take a second to define our class. First, a note about naming classes: names should be capitalized with no spaces and/or underscores (ex: Car, ShoppingCart). The keyword <code class="inline">class</code> should come before the class name, and the class should end with the keyword <code class="inline">end</code>.
+          <code class="block">
+            class Car
+            end
+          </code>
+        </p>
+        <p>
+          Perhaps the most important method in a class is the constructor method, which is named <code class="inline">initialize</code>. This is how Ruby knows exactly what to store in an object of that particular class, and what to name the values. Remember the hash of values that represented a Pinto? We will put them to use below:
+          <code class="block">
+            class Car
+              def initialize(params)
+                @size    = params[:size]
+                @color   = params[:color]
+                @mileage = params[:mileage]
+                @year    = params[:year]
+              end
+            end
+          </code>
+          Woah dude, what is the @ symbol doing next to those names? And why are we passing an argument called params to the initialize method? You're right, we need to take a step back! The params is just a place holder name for whatever we pass to our constructor method. The great thing about building a class is that you can pass a hash, which has key-value pairs, to the constructor which greatlty improves readibility and provides more flexibility if we want to change the input down the road. Let's say we start tracking the price of a Car, all we would need to do is add this line of code to our initialize method: <code class="inline">@price = params[:price]</code>. This also allows the creation of a Car object without knowing the exact order of the arguments. The @ symbol represents an instance variable, which is unique to that instance of Car (a Pinto and a Tesla don't share the same size or year).
+        </p>
+        <p>
+          Now it's time to start using our class to create an instance of Car. We will go ahead and create a Pinto!
+          <code class="block">
+            pinto = Car.new(pinto)
+            => #&lt;Car:0x007fe7319590f0 @size="compact", @color="brown", @mileage=250000, @year=1978&gt;
+          </code>
+          Success! We now have an instance of Car class that represents a Pinto. Let's create another instance/object, this time something more exciting...
+          <code class="block">
+            tesla = Car.new(year: 2015, size: "sedan", color: "black")
+            => #&lt;Car:0x007fe73194aff0 @size="sedan", @color="black", @mileage=nil, @year=2015&gt;
+          </code>
+          Wow, a Tesla! But you didn't pass a hash, and mileage is set to nil...what's going on here? Passing a hash of values to a class is such common place in Ruby, it magically takes care of the assignment for you, you just need to list out the key-value pairs. Let's try to set the mileage of our Tesla to 0.
+          <code class="block">
+            tesla.mileage = 0
+            => NoMethodError: ...
+          </code>
+          Hmmm...what's going on here? The problem before us is that we have yet to define any methods for our Car class. Let's do that now.
+          <code class="block">
+            class Car
+              attr_writer :mileage
+              def initialize(params)
+              ...
+              end
+            end
+
+            tesla.mileage = 0
+            => 0
+          </code>
+          Well now, that's sensational! That one little line of code allows us to set a new value to our Tesla! Amazing! There is also <code class="inline">attr_reader</code> which will allow you to return the value of mileage, and <code class="inline">attr_accessor</code> which will allow you to both read and write a given attribute of a class. What if we want to be able to drive our Car instances, which would increase our mileage. Follow along below:
+          <code class="block">
+            class Car
+              attr_accessor :mileage
+              ...
+              def drive(miles)
+                self.mileage += miles
+              end
+            end
+
+            tesla.drive(300)
+            tesla.mileage
+            => 300
+
+            tesla.drive(33)
+            tesla.mileage
+            => 333
+          </code>
+          Sweet! We can now track the mileage for an instance of Car. This is accomplished through an instance method. By calling the drive method on the tesla object, we are able to operate on that given object. We use the keyword <code class="inline">self</code> inside of an instance method to represent the object that we are calling the instance method on, which allows us to modify the value of mileage.
+        </p>
+        <p>
+          Well, there you have it. Tell me you're feeling a little classier?? Just enough knowledge to be dangerous. If you break your computer, it's not my fault. When in doubt, google it out.
+        </p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>
