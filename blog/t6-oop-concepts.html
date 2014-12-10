@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">BPL: OMG!</li>
+          <li class="author">by Matthew Gray on December 9, 2014</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <p>
+          In my latest technical blog post, I will attempt to explain the difference of Blocks, Procs, and Lambdas in Ruby. These are called closures, which are basically functions that have an environment of their own. While each have their specific uses, they are confusingly similar. Can't we just interchange them all? What happens when we pass a <code class="inline">block</code> instead of a <code class="inline">Proc</code>, or a <code class="inline">lambda</code>. So get out your thinking cap and pour yourself a tall glass of patience.
+        </p>
+        <h2>Blocks on blocks on blocks</h2>
+        <p>
+          <p>
+            The first closure on the list is Ruby blocks, which allow you to group statements together. A block must be passed to a method, where it is internalized by Ruby and run in context of the method in which it is found. Blocks are defined between either a set of curly braces, <code class="inline">{ ... }</code>, or by using the keywords <code class="inline">do</code> and <code class="inline">end</code>. See the structure of a block below:
+            <code class="block">
+              do
+                puts "i am inside a block"
+              end
+            </code>
+          </p>
+          <p>
+            Now that you have a broad and basic understanding of what a block is, let's take a look at some code of a block in action. We will iterate, or go through, an array of strings, printing the value of each string object.
+            <code class="block">
+              string_cheese = %w(cheddar swiss mozzerella)
+              string_cheese.each { |cheese| puts cheese }
+
+              output:
+              cheddar
+              swiss
+              mozzerella
+            </code>
+            The <code class="inline">each</code> method takes a block as an argument. This allows for a clear and concise way to iterate through each of the items in the array, allowing us to pass each one of them to the block, which is then evaluated with the passed in value. Blocks are extremely common in Ruby, and you can even define your own methods that take blocks by using the keyword <code class="inline">yield</code>. See the following example:
+            <code class="block">
+              def i_take_a_block
+                puts "this is me, the method."
+                yield
+                puts "still here, the method that is."
+              end
+
+              i_take_a_block { puts "I AM A BLOCK!" }
+
+              output:
+              this is me, the method.
+              I AM A BLOCK!
+              still here, the method that is.
+            </code>
+          </p>
+        </p>
+        <h2>Procs on Procs on Procs</h2>
+        <p>
+          So, now the question is: What is a Proc, if a block is a block? Well, the answer to that may be a little confusing at first. A Proc is a block, of course, of course. Okay, in all seriousness a Proc is a block that can be re-used. Oh, I must have forgot to mention that a block is a one time deal, whereas a Proc can be saved and passed to many different methods.
+          <code class="block">
+            def i_take_a_proc(proc)
+              puts "this is me, the new method."
+              proc.call
+              puts "back in the method again."
+            end
+            i_am_proc = Proc.new { puts "I AM A PROC" }
+
+            i_take_a_proc(i_am_proc)
+
+            output:
+            this is me, the new method.
+            I AM A PROC
+            back in the method again.
+          </code>
+          Procs are treated as any other object that gets passed to a method in Ruby. There is no special syntax needed, you just need to use the <code class="inline">call</code> method on the proc object that is passed in. Now you have reusable blocks!
+        </p>
+        <h2>Mary had a little lambda</h2>
+        <p>
+          A lambda is an anonymous function in Ruby. So what's the difference between a lambda and a Proc? Well, there are 2 key characteristics that separate the them from each other. For starters, lambdas will check the number of arguments passed in. Lambdas will raise an error if the number of arguments passed to it are not exactly the same as those defined in the lambda, whereas Procs will set any missing arguments to <code class="inline">nil</code>. The second difference is in the way a lambda returns a value to a method. Procs will break out of the method it is called within and return the value from the statement inside the Proc, while lambdas will return a value to the method it was called within. This allows a method to continue running, hitting a return statement inside the method. See below for examples:
+          <code class="block">
+            def proc_method
+              Proc.new { return "return of the proc" }.call
+              return "this will never be returned."
+            end
+
+            def lambda_method
+              lambda { return "the lambda strikes back" }.call
+              return "this will be returned."
+            end
+
+            proc_method
+            => "return of the proc"
+
+            lambda_method
+            => "this will be returned."
+          </code>
+        </p>
+        <h3>That's a wrap!</h3>
+        <p>
+          So, there you have it. What's done is done. Now go get your hands dirty in the console. There's no better way to find out how these things work than to mess around in good ol' irb!
+        </p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>
