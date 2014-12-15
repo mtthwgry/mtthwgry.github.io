@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">Epic Battle: Ruby vs. JavaScript</li>
+          <li class="author">by Matthew Gray on December 14, 2014</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <p>
+          In this blog post, I will take a high-level look at the differences between Ruby and JavaScript by providing some examples for comparison. The truth of the matter is that these two languages have a lot in common, but have syntax and structure that vary greatly. That said, if you know Ruby pretty well then JavaScript shouldn't challenge you too much.
+        </p>
+        <h3>Ruby Methods vs. JavaScript Function</h3>
+        <p>
+          Ruby calls them methods, while JavaScript calls them functions. Methods and functions are synonymous with each other. See below examples of a method definition in Ruby, and a function definition in JavaScript.
+          <code class="block">
+            #Ruby method definition:
+            def add(num1, num2)
+              num1 + num2
+            end
+
+            //JavaScript function definition:
+            var add = function(num1, num2) {
+              return num1 + num2;
+            };
+          </code>
+          The main difference here is the way a method/function is defined. In Ruby, the keyword <code class="inline">def</code> is used, but in JavaScript you need to set a variable using the <code class="inline">var</code> keyword and then set that equal to the function you build. Another notable difference are the curly braces, <code class="inline">{}</code>, which enclose the body of a function in JavaScript. Ruby uses the keywords <code class="inline">def</code> followed by the method name (and arguments, if any) the body of the method begins on the next new line, and is closed by the keyword <code class="inline">end</code>. Lastly, Ruby has an implicit return for methods, meaning that the last line evaluated in the method will be the returned value. JavaScript doesn't have an implicit return, so you must use the <code class="inline">return</code> keyword.
+        </p>
+        <h3>Ruby Hashes vs. JavaScript Object</h3>
+        <p>
+          Is a Ruby hash the same as a JavaScript Object? The answer is no, but they are very similar. An object in JavaScript is a collection of attributes and functions that are unique to that given instance. Yes, you read correctly, an object in JavaScript can contain attributes <em>and functions.</em> A Ruby hash is just a set of key-value pairs, but isn't the syntax the same as a JavaScript object? See the examples below:
+          <code class="block">
+            #Ruby hash:
+            car = {
+              color: "black",
+              make: "Tesla",
+              model: "Model S"
+            }
+
+            //Javascript object:
+            var car = {
+              color: "black",
+              make: "Ford",
+              model: "Model T"
+            };
+          </code>
+          You can see that the instantiations of these two objects are identical (except for the var and ; in JavaScript). This can be confusing, because a JavaScript object looks like a Ruby hash, but it actually behaves more like a Ruby object. See below:
+          <code class="block">
+            //JavaScript file
+            console.log(car.color);
+            console.log(car.make);
+            console.log(car.model);
+
+            //Console Output
+            //black
+            //Ford
+            //Model T
+          </code>
+          That's crazy! You can access the attributes of a JavaScript object using dot notation...just like with Ruby objects. So how do you store a function in an object? Simple.
+          <code class="block">
+            car.drive = function(distance) {
+              console.log(this.model + " just drove " + distance + " miles.");
+            };
+          </code>
+          The other difference is that JavaScript objects don't have the built-in methods that Ruby hashes do.
+        </p>
+<!--         <h3>Ruby Classes vs. JavaScript Constructors</h3>
+        <p></p>
+        <h3>Ruby Loops vs. JavaScript Loops</h3>
+        <p></p> -->
+        <p>Well, that's all I have for the time-box I gave myself. I'll definitely add to this in the future, so check back for more Epic Battle: Ruby vs. JavaScript.</p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>
