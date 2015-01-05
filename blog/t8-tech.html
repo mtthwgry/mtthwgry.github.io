@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head><link rel="stylesheet" type="text/css" href="../stylesheets/blog-stylesheet.css">
+    <title>mtthwgry Blog</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Matthew Gray Blog</h1>
+    </div>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" -->
+        <ul>
+          <li class="category">Technical</li>
+          <li class="title">Dynamic vs. Static Typing</li>
+          <li class="author">by Matthew Gray on January 4, 2015</li>
+        </ul>
+      </div>
+      <div class="post-body">
+        <h3>Typed, like using a special keyboard?</h3>
+        <p>
+          No. Not like using a special keyboard. A languages type system refers to the property associated to a variety of elements, from variables to functions. For example, in Java there are 8 primitive data types ranging from a <code class="inline">byte</code> to a <code class="inline">long</code>. A variable in Java must be declared as a specific type, and it's value must conform to that specific data type's rules. A function must be declared by it's return data type. For example:
+          <code class="block">
+            int maxValue = 300;
+
+            int square(int i) {
+              return i * i;
+            }
+          </code>
+          Java is a static typed language. You must delcare everything in Java, including the arguments being passed to a function.
+        </p>
+        <p>
+          Ruby is a dynamicly typed language. A dynamic typed language doesn't require you to declare your variables, arguments, function return values, etc. For example, you can do the following in Ruby:
+          <code class="block">
+            maxValue = 300
+
+            def square(i)
+              return i * i
+            end
+          </code>
+          Ignoring the syntactical (Is that even a word? If not, it should be...) differences between the two languages, one would think that the Ruby way, dynamic typing, is much easier. While the flexible nature of dynamic typing is one of it's greatest benefits, it's also one of it's greatest risks. The strict nature of having to declare every piece of data in your program, allows you to know exactly what you're dealing with. The problem is that static typing can sometimes get in the way when you need an object to act like another object, you must declare either a new variable or redeclare the variable as the new required data type.
+        </p>
+      </div>
+    </div>
+    <div id="footer">mtthwgry blog</div>
+  </body>
+</html>
